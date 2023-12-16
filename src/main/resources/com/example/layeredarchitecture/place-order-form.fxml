@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<?import javafx.scene.control.TextField?>
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="654.0" style="-fx-background-color: white;" stylesheets="@assests/styles/place-order-form.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.layeredarchitecture.controller.PlaceOrderFormController">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="80.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="654.0">
+         <fill>
+            <LinearGradient endX="0.04807692307692308" endY="0.7115384615384616">
+               <stops>
+                  <Stop color="#1598d6" />
+                  <Stop color="WHITE" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </fill></Rectangle>
+      <ImageView id="imgHome" fitHeight="53.0" fitWidth="55.0" layoutX="22.0" layoutY="16.0" onMouseClicked="#navigateToHome" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assests/images/home-icon.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <Label layoutX="95.0" layoutY="24.0" text="Place Order">
+         <font>
+            <Font name="Lucida Sans Demibold" size="27.0" />
+         </font>
+      </Label>
+<!--      <JFXButton id="btnAddNewOrder" fx:id="btnAddNewOrder" layoutX="518.0" layoutY="25.0" onAction="#btnAddNew_OnAction" prefHeight="35.0" prefWidth="122.0" style="-fx-cursor: hand; -fx-background-color: #007bff; -fx-text-fill: white;" text="+ New Order" />-->
+      <JFXComboBox fx:id="cmbCustomerId" labelFloat="true" layoutX="14.0" layoutY="132.0" prefHeight="28.0" prefWidth="161.0" promptText="Customer ID :" />
+      <TextField fx:id="txtCustomerName"  layoutX="195.0" layoutY="132.0" prefHeight="28.0" prefWidth="437.0" promptText="Customer Name :" />
+      <JFXComboBox fx:id="cmbItemCode" labelFloat="true" layoutX="14.0" layoutY="178.0" prefHeight="28.0" prefWidth="161.0" promptText="Item Code :" />
+
+      <TextField fx:id="txtDescription"  layoutX="195.0" layoutY="178.0" prefHeight="28.0" prefWidth="437.0" promptText="Item Description :" />
+      <TextField fx:id="txtQtyOnHand"  layoutX="17.0" layoutY="226.0" prefHeight="28.0" prefWidth="161.0" promptText="Qty. on Hand" />
+      <TextField fx:id="txtUnitPrice"  layoutX="195.0" layoutY="226.0" prefHeight="28.0" prefWidth="161.0" promptText="Unit Price" />
+      <TextField fx:id="txtQty"  layoutX="370.0" layoutY="226.0" onAction="#txtQty_OnAction" prefHeight="28.0" prefWidth="161.0" promptText="Qty." />
+      <JFXButton id="btnSave" fx:id="btnSave" layoutX="558.0" layoutY="226.0" onAction="#btnAdd_OnAction" prefHeight="28.0" prefWidth="74.0" style="-fx-cursor: hand;" text="Add" />
+      <TableView fx:id="tblOrderDetails" layoutX="22.0" layoutY="280.0" prefHeight="189.0" prefWidth="615.0">
+         <columns>
+            <TableColumn prefWidth="77.0" text="Code" />
+            <TableColumn prefWidth="174.0" text="Description" />
+            <TableColumn prefWidth="64.0" text="Qty" />
+            <TableColumn prefWidth="99.0" text="Unit Price" />
+            <TableColumn prefWidth="88.0" text="Total" />
+            <TableColumn prefWidth="99.0" text="Delete" />
+         </columns>
+      </TableView>
+      <!--      <JFXTextField fx:id="txtQty" onKeyPressed="#txtQty_OnKeyPressed" labelFloat="true" layoutX="370.0" layoutY="226.0" prefHeight="28.0" prefWidth="161.0" promptText="Qty." />-->
+      <Label fx:id="lblId" alignment="CENTER_RIGHT" layoutX="486.0" layoutY="68.0" prefHeight="24.0" prefWidth="152.0" text="ORDER ID : OD001">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblDate" alignment="CENTER_RIGHT" layoutX="484.0" layoutY="93.0" prefHeight="24.0" prefWidth="152.0" text="2021-10-11">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblTotal" layoutX="22.0" layoutY="485.0" text="TOTAL : 0.00">
+         <font>
+            <Font size="32.0" />
+         </font>
+      </Label>
+      <JFXButton id="btnSave" fx:id="btnPlaceOrder" layoutX="537.0" layoutY="490.0" onAction="#btnPlaceOrder_OnAction" prefHeight="35.0" prefWidth="101.0" style="-fx-cursor: hand; -fx-background-color: orange; -fx-text-fill: black;" text="Place Order" />
+   </children>
+</AnchorPane>
