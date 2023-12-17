@@ -236,7 +236,7 @@ public class PlaceOrderFormController {
 
 
     //cc
-    
+
     @FXML
     private void navigateToHome(MouseEvent event) throws IOException {
         URL resource = this.getClass().getResource("/com/example/layeredarchitecture/main-form.fxml");

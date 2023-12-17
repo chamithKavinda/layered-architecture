@@ -14,17 +14,16 @@ public class ItemDAOImpl implements ItemDAO{
         Statement stm = connection.createStatement();
         ResultSet rst = stm.executeQuery("SELECT * FROM Item");
 
-        ArrayList<ItemDTO> allItem = new ArrayList<>();
-
-        while (rst.next()){
+        while(rst.next()){
             ItemDTO itemDTO = new ItemDTO(
                     rst.getString("code"),
                     rst.getString("description"),
                     rst.getBigDecimal("unitPrice"),
-                    rst.getInt("qtyOnHand"));
-            allItem.add(itemDTO);
+                    rst.getInt("qtyOnhand")
+            );
+            getallItem().add(itemDTO);
         }
-        return allItem;
+        return getallItem();
     }
 
     @Override
@@ -35,6 +34,8 @@ public class ItemDAOImpl implements ItemDAO{
         pstm.setString(2, dto.getDescription());
         pstm.setBigDecimal(3, dto.getUnitPrice());
         pstm.setInt(4, dto.getQtyOnHand());
+
+
         return pstm.executeUpdate() > 0;
 
     }

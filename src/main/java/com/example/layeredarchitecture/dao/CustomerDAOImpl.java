@@ -12,16 +12,15 @@ public class CustomerDAOImpl implements CustomerDAO {
         Connection connection = DBConnection.getDbConnection().getConnection();
         Statement stm = connection.createStatement();
         ResultSet rst = stm.executeQuery("SELECT * FROM Customer");
-        ArrayList<CustomerDTO> allCustomer = new ArrayList<>();
 
-        while (rst.next()) {
+        while (rst.next()){
             CustomerDTO customerDTO = new CustomerDTO(
                     rst.getString("id"),
                     rst.getString("name"),
                     rst.getString("address"));
-            allCustomer.add(customerDTO);
+            getAllCustomer().add(customerDTO);
         }
-        return allCustomer;
+        return getAllCustomer();
     }
 
     @Override
@@ -31,7 +30,7 @@ public class CustomerDAOImpl implements CustomerDAO {
         pstm.setString(1, dto.getId());
         pstm.setString(2, dto.getName());
         pstm.setString(3, dto.getAddress());
-        return pstm.executeUpdate() > 0;
+        return pstm.executeUpdate()>0;
     }
 
     @Override
@@ -58,6 +57,7 @@ public class CustomerDAOImpl implements CustomerDAO {
         Connection connection = DBConnection.getDbConnection().getConnection();
         PreparedStatement pstm = connection.prepareStatement("DELETE FROM Customer WHERE id=?");
         pstm.setString(1, id);
+
         pstm.executeUpdate();
     }
 
