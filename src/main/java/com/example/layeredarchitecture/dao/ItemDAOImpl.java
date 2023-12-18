@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class ItemDAOImpl implements ItemDAO{
 
     @Override
-    public ArrayList<ItemDTO> getallItem() throws SQLException, ClassNotFoundException {
+    public ArrayList<ItemDTO> getAll() throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.getDbConnection().getConnection();
         Statement stm = connection.createStatement();
         ResultSet rst = stm.executeQuery("SELECT * FROM Item");
@@ -28,7 +28,7 @@ public class ItemDAOImpl implements ItemDAO{
     }
 
     @Override
-    public boolean getSaveItem(ItemDTO dto) throws SQLException, ClassNotFoundException {
+    public boolean save(ItemDTO dto) throws SQLException, ClassNotFoundException {
        /* Connection connection = DBConnection.getDbConnection().getConnection();
         PreparedStatement pstm = connection.prepareStatement("INSERT INTO Item (code, description, unitPrice, qtyOnHand) VALUES (?,?,?,?)");
         pstm.setString(1, dto.getCode());
@@ -46,7 +46,7 @@ public class ItemDAOImpl implements ItemDAO{
     }
 
     @Override
-    public boolean updateItem(ItemDTO dto) throws SQLException, ClassNotFoundException {
+    public boolean update(ItemDTO dto) throws SQLException, ClassNotFoundException {
         /*Update Item*/
        /* Connection connection = DBConnection.getDbConnection().getConnection();
         PreparedStatement pstm = connection.prepareStatement("UPDATE Item SET description=?, unitPrice=?, qtyOnHand=? WHERE code=?");
@@ -60,7 +60,7 @@ public class ItemDAOImpl implements ItemDAO{
     }
 
     @Override
-    public boolean deleteItem(String code) throws SQLException, ClassNotFoundException {
+    public boolean delete(String code) throws SQLException, ClassNotFoundException {
        /* Connection connection = DBConnection.getDbConnection().getConnection();
         PreparedStatement pstm = connection.prepareStatement("DELETE FROM Item WHERE code=?");
         pstm.setString(1, code);
@@ -86,18 +86,18 @@ public class ItemDAOImpl implements ItemDAO{
     }
 
     @Override
-    public boolean existItem(String code) throws SQLException, ClassNotFoundException {
+    public boolean exist(String code) throws SQLException, ClassNotFoundException {
         ResultSet rst = SQLUtil.execute("SELECT code FROM Item WHERE code=?", code);
         return rst.next();
     }
 
     @Override
-    public ItemDTO searchItem(String s) throws SQLException, ClassNotFoundException {
+    public ItemDTO search(String s) throws SQLException, ClassNotFoundException {
        /* Connection connection = DBConnection.getDbConnection().getConnection();
         PreparedStatement pstm = connection.prepareStatement("SELECT * FROM Item WHERE code=?");
         pstm.setString(1, s);
         ResultSet rst = pstm.executeQuery();*/
-        ResultSet rst = SQLUtil.execute("SELECT * FROM Item WHERE code=?");
+        ResultSet rst = SQLUtil.execute("SELECT * FROM Item WHERE code=?",s);
         rst.next();
         return new ItemDTO(rst.getString(1),rst.getString(2),rst.getBigDecimal(3),rst.getInt(4));
     }
