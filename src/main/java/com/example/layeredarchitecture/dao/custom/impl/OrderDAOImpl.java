@@ -1,11 +1,12 @@
-package com.example.layeredarchitecture.dao;
+package com.example.layeredarchitecture.dao.custom.impl;
 
-import com.example.layeredarchitecture.db.DBConnection;
+import com.example.layeredarchitecture.dao.SQLUtil;
+import com.example.layeredarchitecture.dao.custom.OrderDAO;
 import com.example.layeredarchitecture.model.OrderDTO;
 
 import java.sql.*;
 
-public class OrderDAOImpl implements OrderDAO{
+public class OrderDAOImpl implements OrderDAO {
     @Override
     public String generateNextOrderId() throws SQLException, ClassNotFoundException {
       /*  Connection connection = DBConnection.getDbConnection().getConnection();
@@ -42,5 +43,4 @@ public class OrderDAOImpl implements OrderDAO{
         return SQLUtil.execute("INSERT INTO `Orders` (oid, date, customerId) VALUES (?,?,?)", dto.getOrderId(), dto.getOrderDate(), dto.getCustomerId());
 
     }
-
 }
