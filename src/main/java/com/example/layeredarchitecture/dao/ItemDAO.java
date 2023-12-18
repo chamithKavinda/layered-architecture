@@ -12,7 +12,7 @@ public interface ItemDAO {
 
      boolean getSaveItem(ItemDTO dto) throws SQLException, ClassNotFoundException;
 
-    void updateItem(ItemDTO dto) throws SQLException, ClassNotFoundException;
+    boolean updateItem(ItemDTO item) throws SQLException, ClassNotFoundException;
 
      boolean deleteItem(String code) throws SQLException, ClassNotFoundException;
 
