@@ -3,7 +3,8 @@ package com.example.layeredarchitecture.dao.custom.impl;
 import com.example.layeredarchitecture.dao.SQLUtil;
 import com.example.layeredarchitecture.dao.custom.ItemDAO;
 import com.example.layeredarchitecture.db.DBConnection;
-import com.example.layeredarchitecture.model.ItemDTO;
+import com.example.layeredarchitecture.dto.ItemDTO;
+import com.example.layeredarchitecture.entity.Item;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -11,26 +12,26 @@ import java.util.ArrayList;
 public class ItemDAOImpl implements ItemDAO {
 
     @Override
-    public ArrayList<ItemDTO> getAll() throws SQLException, ClassNotFoundException {
+    public ArrayList<Item> getAll() throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.getDbConnection().getConnection();
         Statement stm = connection.createStatement();
         ResultSet rst = stm.executeQuery("SELECT * FROM Item");
 
-        ArrayList<ItemDTO> allItem = new ArrayList<>();
+        ArrayList<Item> allItem = new ArrayList<>();
 
         while (rst.next()){
-            ItemDTO itemDTO = new ItemDTO(
+            Item entity = new Item(
                     rst.getString("code"),
                     rst.getString("description"),
                     rst.getBigDecimal("unitPrice"),
                     rst.getInt("qtyOnHand"));
-            allItem.add(itemDTO);
+            allItem.add(entity);
         }
         return allItem;
     }
 
     @Override
-    public boolean save(ItemDTO dto) throws SQLException, ClassNotFoundException {
+    public boolean save(Item entity) throws SQLException, ClassNotFoundException {
        /* Connection connection = DBConnection.getDbConnection().getConnection();
         PreparedStatement pstm = connection.prepareStatement("INSERT INTO Item (code, description, unitPrice, qtyOnHand) VALUES (?,?,?,?)");
         pstm.setString(1, dto.getCode());
@@ -40,15 +41,15 @@ public class ItemDAOImpl implements ItemDAO {
         return pstm.executeUpdate() > 0;*/
 
         return SQLUtil.execute("INSERT INTO Item (code, description, unitPrice, qtyOnHand) VALUES (?,?,?,?)",
-                dto.getCode(),
-                dto.getDescription(),
-                dto.getUnitPrice(),
-                dto.getQtyOnHand());
+                entity.getCode(),
+                entity.getDescription(),
+                entity.getUnitPrice(),
+                entity.getQtyOnHand());
 
     }
 
     @Override
-    public boolean update(ItemDTO dto) throws SQLException, ClassNotFoundException {
+    public boolean update(Item entity) throws SQLException, ClassNotFoundException {
         /*Update Item*/
        /* Connection connection = DBConnection.getDbConnection().getConnection();
         PreparedStatement pstm = connection.prepareStatement("UPDATE Item SET description=?, unitPrice=?, qtyOnHand=? WHERE code=?");
@@ -58,7 +59,7 @@ public class ItemDAOImpl implements ItemDAO {
         pstm.setString(4, dto.getCode());
         return pstm.executeUpdate()>0;*/
 
-        return SQLUtil.execute("UPDATE Item SET description=?, unitPrice=?, qtyOnHand=? WHERE code=?", dto.getDescription(), dto.getUnitPrice(), dto.getQtyOnHand(), dto.getCode());
+        return SQLUtil.execute("UPDATE Item SET description=?, unitPrice=?, qtyOnHand=? WHERE code=?", entity.getDescription(), entity.getUnitPrice(), entity.getQtyOnHand(), entity.getCode());
     }
 
     @Override
@@ -94,14 +95,14 @@ public class ItemDAOImpl implements ItemDAO {
     }
 
     @Override
-    public ItemDTO search(String s) throws SQLException, ClassNotFoundException {
+    public Item search(String s) throws SQLException, ClassNotFoundException {
        /* Connection connection = DBConnection.getDbConnection().getConnection();
         PreparedStatement pstm = connection.prepareStatement("SELECT * FROM Item WHERE code=?");
         pstm.setString(1, s);
         ResultSet rst = pstm.executeQuery();*/
         ResultSet rst = SQLUtil.execute("SELECT * FROM Item WHERE code=?",s);
         rst.next();
-        return new ItemDTO(rst.getString(1),rst.getString(2),rst.getBigDecimal(3),rst.getInt(4));
+        return new Item(rst.getString(1),rst.getString(2),rst.getBigDecimal(3),rst.getInt(4));
     }
 
 }

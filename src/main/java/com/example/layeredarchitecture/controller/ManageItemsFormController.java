@@ -2,7 +2,8 @@ package com.example.layeredarchitecture.controller;
 
 import com.example.layeredarchitecture.bo.custom.impl.ItemBOImpl;
 import com.example.layeredarchitecture.dao.custom.impl.ItemDAOImpl;
-import com.example.layeredarchitecture.model.ItemDTO;
+import com.example.layeredarchitecture.dto.ItemDTO;
+import com.example.layeredarchitecture.entity.Item;
 import com.example.layeredarchitecture.view.tdm.ItemTM;
 import com.jfoenix.controls.JFXButton;
 import javafx.application.Platform;
@@ -75,7 +76,7 @@ public class ManageItemsFormController {
         tblItems.getItems().clear();
         try {
             /*Get all items*/
-            ArrayList<ItemDTO> allItem = itemBO.getAll();
+            ArrayList<ItemDTO> allItem = itemBO.getAllItem();
             for(ItemDTO dto : allItem ){
                 tblItems.getItems().add(
                         new ItemTM(
@@ -183,7 +184,7 @@ public class ManageItemsFormController {
                     new Alert(Alert.AlertType.ERROR, code + " already exists").show();
                 }
 
-                boolean isSaved = itemBO.save(new ItemDTO(code,description,unitPrice,qtyOnHand));
+                boolean isSaved = itemBO.save(new Item(code,description,unitPrice,qtyOnHand));
 
                 if(isSaved){
                     tblItems.getItems().add(new ItemTM(code,description,unitPrice,qtyOnHand));
@@ -201,7 +202,7 @@ public class ManageItemsFormController {
                     new Alert(Alert.AlertType.ERROR, "There is no such item associated with the id " + code).show();
                 }
 
-                ItemDTO dto = new ItemDTO(code,description,unitPrice,qtyOnHand);
+                Item dto = new Item(code,description,unitPrice,qtyOnHand);
                 itemBO.update(dto);
 
                 ItemTM selectedItem = tblItems.getSelectionModel().getSelectedItem();

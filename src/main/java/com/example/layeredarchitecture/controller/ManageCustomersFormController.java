@@ -3,7 +3,7 @@ package com.example.layeredarchitecture.controller;
 import com.example.layeredarchitecture.bo.custom.impl.CustomerBOImpl;
 import com.example.layeredarchitecture.dao.custom.CustomerDAO;
 import com.example.layeredarchitecture.dao.custom.impl.CustomerDAOImpl;
-import com.example.layeredarchitecture.model.CustomerDTO;
+import com.example.layeredarchitecture.entity.Customer;
 import com.example.layeredarchitecture.view.tdm.CustomerTM;
 import com.jfoenix.controls.JFXButton;
 import javafx.application.Platform;
@@ -75,8 +75,8 @@ public class ManageCustomersFormController {
         tblCustomers.getItems().clear();
         /*Get all customers*/
         try {
-            ArrayList<CustomerDTO> allCustomer = customerBO.getAll();
-            for (CustomerDTO dto:allCustomer) {
+            ArrayList<Customer> allCustomer = customerBO.getAll();
+            for (Customer dto:allCustomer) {
                 tblCustomers.getItems().add(
                         new CustomerTM(
                                 dto.getId(),
@@ -154,7 +154,7 @@ public class ManageCustomersFormController {
                 }
 
 
-                boolean isSaved = customerBO.save(new CustomerDTO(id, name, address));
+                boolean isSaved = customerBO.save(new Customer(id, name, address));
 
                 if (isSaved) {
                     tblCustomers.getItems().add(new CustomerTM(id, name, address));
@@ -172,9 +172,9 @@ public class ManageCustomersFormController {
                 if (!existCustomer(id)) {
                     new Alert(Alert.AlertType.ERROR, "There is no such customer associated with the id " + id).show();
                 }
-                CustomerDTO dto = new CustomerDTO(id,name,address);
+                Customer entity = new Customer(id,name,address);
                 CustomerDAO dao = new CustomerDAOImpl();
-                dao.update(dto);
+                dao.update(entity);
 
             } catch (SQLException e) {
                 new Alert(Alert.AlertType.ERROR, "Failed to update the customer " + id + e.getMessage()).show();
