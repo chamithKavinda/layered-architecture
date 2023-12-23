@@ -7,6 +7,7 @@ import com.example.layeredarchitecture.model.OrderDetailDTO;
 import java.sql.SQLException;
 
 public class PlaceOrderDAOImpl implements PlaceOrderDAO {
+
     @Override
     public boolean saveOrderDetails(OrderDetailDTO dto) throws SQLException, ClassNotFoundException {
        /* Connection connection= DBConnection.getDbConnection().getConnection();
