@@ -11,7 +11,8 @@ public class Customer {
         this.address = address;
     }
 
-    public Customer(){}
+    public Customer() {
+    }
 
     public String getId() {
         return id;

@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface PlaceOrderBO extends SuperBO {
 
-    boolean placeOrder(String orderId, LocalDate orderDate, String customerId, List<OrderDetailDTO> orderDetails) throws SQLException, ClassNotFoundException;
+    boolean placeOrder(String orderId, LocalDate orderDate, String customerId, List<OrderDetailDTO> orderDetails) throws SQLException, ClassNotFoundException ;
 
     CustomerDTO searchCustomer(String id) throws SQLException, ClassNotFoundException;
 

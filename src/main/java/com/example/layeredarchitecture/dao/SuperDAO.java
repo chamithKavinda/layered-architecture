@@ -1,5 +1,4 @@
 package com.example.layeredarchitecture.dao;
 
-public interface SuperDAO {
-
+public interface SuperDAO{
 }

@@ -1,9 +1,8 @@
 package com.example.layeredarchitecture.controller;
 
+import com.example.layeredarchitecture.bo.custom.ItemBO;
 import com.example.layeredarchitecture.bo.custom.impl.ItemBOImpl;
-import com.example.layeredarchitecture.dao.custom.impl.ItemDAOImpl;
 import com.example.layeredarchitecture.dto.ItemDTO;
-import com.example.layeredarchitecture.entity.Item;
 import com.example.layeredarchitecture.view.tdm.ItemTM;
 import com.jfoenix.controls.JFXButton;
 import javafx.application.Platform;
@@ -26,7 +25,6 @@ import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
 
-
 public class ManageItemsFormController {
     public AnchorPane root;
     public TextField txtCode;
@@ -37,10 +35,7 @@ public class ManageItemsFormController {
     public TableView<ItemTM> tblItems;
     public TextField txtUnitPrice;
     public JFXButton btnAddNewItem;
-
-    //property Injection
-   // ItemDAOImpl itemDao = new ItemDAOImpl();
-    ItemBOImpl itemBO = new ItemBOImpl();
+    ItemBO itemBO=new ItemBOImpl();
 
     public void initialize() {
         tblItems.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("code"));
@@ -75,18 +70,17 @@ public class ManageItemsFormController {
     private void loadAllItems() {
         tblItems.getItems().clear();
         try {
-            /*Get all items*/
             ArrayList<ItemDTO> allItem = itemBO.getAllItem();
-            for(ItemDTO dto : allItem ){
+            for (ItemDTO dto : allItem) {
                 tblItems.getItems().add(
                         new ItemTM(
                                 dto.getCode(),
                                 dto.getDescription(),
                                 dto.getUnitPrice(),
                                 dto.getQtyOnHand()
-                        )
-                );
+                        ));
             }
+
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         } catch (ClassNotFoundException e) {
@@ -136,15 +130,12 @@ public class ManageItemsFormController {
     }
 
     public void btnDelete_OnAction(ActionEvent actionEvent) {
-        /*Delete Item*/
         String code = tblItems.getSelectionModel().getSelectedItem().getCode();
         try {
             if (!existItem(code)) {
                 new Alert(Alert.AlertType.ERROR, "There is no such item associated with the id " + code).show();
             }
-
-            ItemDAOImpl itemDao = new ItemDAOImpl();
-            itemDao.delete(code);
+            itemBO.deleteItem(code);
 
             tblItems.getItems().remove(tblItems.getSelectionModel().getSelectedItem());
             tblItems.getSelectionModel().clearSelection();
@@ -183,10 +174,9 @@ public class ManageItemsFormController {
                 if (existItem(code)) {
                     new Alert(Alert.AlertType.ERROR, code + " already exists").show();
                 }
-
-                boolean isSaved = itemBO.save(new Item(code,description,unitPrice,qtyOnHand));
-
-                if(isSaved){
+                //Save Item
+                boolean isSaved = itemBO.saveItem(new ItemDTO(code,description,unitPrice,qtyOnHand));
+                if (isSaved) {
                     tblItems.getItems().add(new ItemTM(code,description,unitPrice,qtyOnHand));
                 }
 
@@ -201,9 +191,7 @@ public class ManageItemsFormController {
                 if (!existItem(code)) {
                     new Alert(Alert.AlertType.ERROR, "There is no such item associated with the id " + code).show();
                 }
-
-                Item dto = new Item(code,description,unitPrice,qtyOnHand);
-                itemBO.update(dto);
+                itemBO.updateItem(new ItemDTO(code,description,unitPrice,qtyOnHand));
 
                 ItemTM selectedItem = tblItems.getSelectionModel().getSelectedItem();
                 selectedItem.setDescription(description);
@@ -222,13 +210,14 @@ public class ManageItemsFormController {
 
 
     private boolean existItem(String code) throws SQLException, ClassNotFoundException {
-        return itemBO.exist(code);
+        return itemBO.existItem(code);
+
     }
 
 
     private String generateNewId() {
         try {
-            return itemBO.generateId();
+            return itemBO.generateItemID();
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         } catch (ClassNotFoundException e) {
