@@ -53,7 +53,6 @@ Before you begin, ensure you have met the following requirements:
    ```bash
    git clone https://github.com/udarasan/layered-architecture.git
    ```
-
 2. Open the project in your IDE.
 3. Build and run the application.
 
